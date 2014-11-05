@@ -3,7 +3,7 @@ RedirectWhenBlocked
 
 # Goals
 
-Thousands of websites are blocked in China. One approach to tackle this is to create mirror websites. The main problem of mirror websites is finding them. This project remedies that problem partially by automatically redirecting users to a mirror website. Additionally if the mirror website itself is blocked, it can in turn redirect to another mirror website. This works if:
+Thousands of websites are blocked in China. One approach to tackle this is to create mirror websites. The main problem of mirror websites is finding them. This project remedies that problem partially by automatically redirecting users to a mirror website if the original website cannot be accessed (presumably because it has been blocked). Additionally if the mirror website itself is blocked, it can in turn redirect to another mirror website. This works if:
 
 1. The user has visited the website succesfully in the past at least once.
 2. The user is using a compatible web browser (see below).
