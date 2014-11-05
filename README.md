@@ -31,7 +31,7 @@ We are also implementing this on a number of our mirror sites. These are listed 
 
 ## How to build
 
-If you are using Linux you can build the demo directory by running ./build_demo.sh. If you cannot run this script, all you have to do is replace the parameters in the src files. Currently the only parameter is {REDIRECTION_URL}. Just replace this parameter with the URL that you want to redirect users to if they can't access your website.
+If you are using Linux you can build the demo directory by running ./build_demo.sh. If you cannot run this script, all you have to do is replace the parameters in the src files. Currently the only parameter is {RWB_REDIRECTION_URL}. Just replace this parameter with the URL that you want to redirect users to if they can't access your website.
 
 ## How to implement on a live website
 
