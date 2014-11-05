@@ -39,7 +39,9 @@ If you are using Linux you can build the demo directory by running ./build_demo.
 2. Copy all files except index.html from the demo directory to your website directory.
 3. Add this code to the HTML of your website (copied from index.html in the demo directory):
 
-    <iframe src="rwb.iframe.html" style="height: 0; visibility: hidden; width: 0"></iframe>
+```
+<iframe src="rwb.iframe.html" style="height: 0; visibility: hidden; width: 0"></iframe>
+```
 
 You don't have to add the code to every HTML file, but the cache will only work if the user has viewed a page containing this code.
 
