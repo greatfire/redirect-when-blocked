@@ -18,7 +18,7 @@ This project owes its existence entirely to https://github.com/willscott/activis
 
 ## How to test that it works
 
-1. Implement this project on a website.
+1. Implement this project on a website (or use one of the demo URLs below).
 2. Load the website in a browser.
 3. Alter your connection so that you cannot access the website anymore. For example, you can modify your hosts file to point the hostname at a non-responsive IP address (simulating DNS poisoning). Or if the hostname is actually blocked by the GFW, just access the website from inside the GFW.
 4. After some delay, your browser should redirect you to the backup URL that you configured.
