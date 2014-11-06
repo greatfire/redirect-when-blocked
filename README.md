@@ -16,18 +16,25 @@ This project owes its existence entirely to https://github.com/willscott/activis
 2. We are focusing on redirecting users to alternative URLs when the original URL has been blocked, not keeping the original alive.
 3. We are creating this specifically to combat the Great Firewall of China, though this approach could also be used to tackle web filtering elsewhere.
 
+## How to test that it works
+
+1. Implement this project on a website.
+2. Load the website in a browser.
+3. Alter your connection so that you cannot access the website anymore. For example, you can modify your hosts file to point the hostname at a non-responsive IP address (simulating DNS poisoning). Or if the hostname is actually blocked by the GFW, just access the website from inside the GFW.
+4. After some delay, your browser should redirect you to the backup URL that you configured.
+
 ## Browser compatibility
 
 * Google Chrome: OK.
-* Firefox: Application cache works, but the fallback is not triggered if a website is DNS poisoned. If you have an idea for a fix please share.
+* Firefox: Application cache works, but the fallback is apparently not always triggered if a website is DNS poisoned, or it's very slow.
 * Other browsers: Application cache should work in IE 10+, Safari 4+ etc (https://developer.mozilla.org/en-US/docs/Web/HTML/Using_the_application_cache#Browser_compatibility) but we have not yet tested this.
 
 ## Online demos
 
 * http://rwb.greatfire.org/demo/
-* https://rwb.greatfire.org/demo/
+* https://boxun1.azurewebsites.net/ (actually DNS poisoned in China)
 
-We are also implementing this on a number of our mirror sites. These are listed on https://github.com/greatfire/wiki.
+We are also implementing this on our mirror sites, listed on https://github.com/greatfire/wiki.
 
 ## How to build
 
