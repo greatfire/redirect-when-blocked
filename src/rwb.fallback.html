@@ -2,16 +2,52 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Site offline - redirecting</title>
-<meta http-equiv="refresh"
-	content="1;url={RWB_REDIRECTION_URL}">
-<script type="text/javascript">
-	window.location.href = '{RWB_REDIRECTION_URL}';
-</script>
+<title>{RWB_TITLE}</title>
+<style>
+li {
+	margin-bottom: 5px;
+}
+</style>
 </head>
 <body>
+	<p>This website could not be accessed. Alternative URLs:</p>
+	<ul>
+		<li><a href='{RWB_REDIRECTION_URL}'>{RWB_REDIRECTION_URL}</a></li>
+		<li><a href='/'>This URL</a></li>
+	</ul>
 	<p>
-		Redirecting you to <a href='{RWB_REDIRECTION_URL}'>{RWB_REDIRECTION_URL}</a>...
+		Or contact us by sending an email to <a href="mailto: {RWB_EMAIL}">{RWB_EMAIL}</a>.
 	</p>
+	<script src="{RWB_JQUERY_URL}"></script>
+	<script>
+		var redirected = false;
+		$('li a').each(function() {
+			var $a = $(this);
+			var a = $a[0];
+
+			var img_url;
+			if ($a.attr('href') == '/') {
+				img_url = window.location.href.replace(/[^\/]+$/, '');
+				$a.attr('href', img_url);
+				$a.html(img_url);
+			} else {
+				img_url = a.protocol + '//' + a.host;
+			}
+			img_url += '/favicon.ico';
+
+			$img = $('<img>').attr('src', img_url).load(function() {
+				$a.css('color', 'green');
+				if (!redirected) {
+					redirected = true;
+					setTimeout(function() {
+						$a.after(' - redirecting...');
+						window.location = a.href;
+					}, 3000);
+				}
+			}).error(function() {
+				$a.css('color', 'red');
+			});
+		});
+	</script>
 </body>
 </html>

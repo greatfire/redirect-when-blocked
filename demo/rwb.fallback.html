@@ -2,16 +2,52 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Site offline - redirecting</title>
-<meta http-equiv="refresh"
-	content="1;url=https://github.com/greatfire/wiki">
-<script type="text/javascript">
-	window.location.href = 'https://github.com/greatfire/wiki';
-</script>
+<title>Redirect When Blocked</title>
+<style>
+li {
+margin-bottom: 5px;
+}
+</style>
 </head>
 <body>
-	<p>
-		Redirecting you to <a href='https://github.com/greatfire/wiki'>https://github.com/greatfire/wiki</a>...
-	</p>
+<p>This website could not be accessed. Alternative URLs:</p>
+<ul>
+<li><a href='https://bbc1.azurewebsites.net'>https://bbc1.azurewebsites.net</a></li>
+<li><a href='https://github.com/greatfire/wiki'>https://github.com/greatfire/wiki</a></li>
+<li><a href='/'>This URL</a></li>
+</ul>
+<p>
+Or contact us by sending an email to <a href="mailto: rwb@greatfire.org">rwb@greatfire.org</a>.
+</p>
+<script src="jquery-1.11.1.min.js"></script>
+<script>
+var redirected = false;
+$('li a').each(function() {
+var $a = $(this);
+var a = $a[0];
+
+var img_url;
+if ($a.attr('href') == '/') {
+img_url = window.location.href.replace(/[^/]+$/, '');
+$a.attr('href', img_url);
+$a.html(img_url);
+} else {
+img_url = a.protocol + '//' + a.host;
+}
+img_url += '/favicon.ico';
+
+$img = $('<img>').attr('src', img_url).load(function() {
+$a.css('color', 'green');
+if (!redirected) {
+redirected = true;
+setTimeout(function() {
+$a.after(' - redirecting...');
+window.location = a.href;
+}, 3000);
+}
+}).error(function() {
+$a.css('color', 'red');
+});
+});
+</script>
 </body>
-</html>

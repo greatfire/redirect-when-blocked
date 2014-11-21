@@ -1,5 +1,8 @@
 CACHE MANIFEST 
-# v1
+# {RWB_VERSION}
+
+CACHE:
+{RWB_JQUERY_URL}
 
 FALLBACK:
 / rwb.fallback.html
