@@ -20,10 +20,10 @@ while read FILE; do
 			if [[ $LINE =~ .*\{RWB_REDIRECTION_URL\}.* ]]; then
 				
 				for RWB_REDIRECTION_URL in $RWB_REDIRECTION_URLS; do
-					echo $LINE | sed "s,{RWB_REDIRECTION_URL},$RWB_REDIRECTION_URL,g"
+					echo "$LINE" | sed "s,{RWB_REDIRECTION_URL},$RWB_REDIRECTION_URL,g"
 				done
 			else
-				echo $LINE
+				echo "$LINE"
 			fi
 			
 		done < $SRC_DIR/$FILE \

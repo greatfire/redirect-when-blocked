@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Fri Nov 21 09:25:14 CST 2014
+# Fri Nov 21 18:32:29 CST 2014
 
 CACHE:
 jquery-1.11.1.min.js
@@ -8,3 +8,4 @@ FALLBACK:
 / rwb.fallback.html
 
 NETWORK:
+*
