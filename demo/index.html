@@ -2,10 +2,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Super important site, changing all the time</title>
+<title>Redirect When Blocked Demo</title>
+<style>
+p {
+	max-width: 500px
+}
+</style>
 </head>
 <body>
-	<p>Super important site, changing all the time</p>
+	<p>
+		To test this script, block your connection to this website and visit
+		it again. One way of doing that is to modify your hosts file, thus
+		imitating DNS poisoning. You can also view the <a
+			href="rwb.fallback.html">fallback page</a> directly.
+	</p>
+	<p>
+		<a href="https://github.com/greatfire/redirect-when-blocked">https://github.com/greatfire/redirect-when-blocked</a>
+	</p>
 
 	<!-- This iframe enabled redirect-when-blocked -->
 	<iframe src="rwb.iframe.html"

@@ -10,13 +10,13 @@ li {
 </style>
 </head>
 <body>
-	<p>This website could not be accessed. Alternative URLs:</p>
+	<p>{RWB_FALLBACK_INTRO}</p>
 	<ul>
 		<li><a href='{RWB_REDIRECTION_URL}'>{RWB_REDIRECTION_URL}</a></li>
-		<li><a href='/'>This URL</a></li>
+		<li><a href='/'>{RWB_FALLBACK_THIS_URL}</a></li>
 	</ul>
 	<p>
-		Or contact us by sending an email to <a href="mailto: {RWB_EMAIL}">{RWB_EMAIL}</a>.
+		{RWB_FALLBACK_EMAIL} <a href="mailto: {RWB_EMAIL}">{RWB_EMAIL}</a>.
 	</p>
 	<script src="{RWB_JQUERY_URL}"></script>
 	<script>
@@ -40,7 +40,7 @@ li {
 				if (!redirected) {
 					redirected = true;
 					setTimeout(function() {
-						$a.after(' - redirecting...');
+						$a.after(' - {RWB_FALLBACK_REDIRECTING}...');
 						window.location = a.href;
 					}, 1000);
 				}
