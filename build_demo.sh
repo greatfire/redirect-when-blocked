@@ -2,11 +2,18 @@
 SRC_DIR="src"
 DEMO_DIR="demo"
 
+RWB_REDIRECTION_URLS="https://bbc1.azurewebsites.net https://github.com/greatfire/wiki"
+
 declare -A VARS
+
+VARS[RWB_REDIRECTION_URL_LIST_ITEMS]=""
+for RWB_REDIRECTION_URL in $RWB_REDIRECTION_URLS; do
+	VARS[RWB_REDIRECTION_URL_LIST_ITEMS]+="<li><a href='$RWB_REDIRECTION_URL'>$RWB_REDIRECTION_URL</a></li>"
+done
+		
 VARS[RWB_EMAIL]="rwb@greatfire.org"
 
 VARS[RWB_JQUERY_URL]="jquery-1.11.1.min.js"
-VARS[RWB_REDIRECTION_URLS]="https://bbc1.azurewebsites.net https://github.com/greatfire/wiki"
 VARS[RWB_TITLE]="Redirect When Blocked"
 
 VARS[RWB_FALLBACK_INTRO]="This website could not be accessed. Alternative URLs:"
@@ -23,23 +30,13 @@ while read FILE; do
 	if [[ $FILE =~ rwb\..* ]]; then
 			
 		while read LINE; do
-			
-			if [[ $LINE =~ .*\{RWB_REDIRECTION_URL\}.* ]]; then
-				
-				for RWB_REDIRECTION_URL in ${VARS[RWB_REDIRECTION_URLS]}; do
-					echo "$LINE" | sed "s,{RWB_REDIRECTION_URL},$RWB_REDIRECTION_URL,g"
-				done
-			else
-				echo "$LINE"
-			fi
-			
-		done < $SRC_DIR/$FILE | while read LINE; do
 			for KEY in "${!VARS[@]}"; do 
 				LINE=$(echo "$LINE" | sed "s,{$KEY},${VARS[$KEY]},g")
 			done
 			echo "$LINE"
 		done \
-		 > $DEMO_FILE
+		< $SRC_DIR/$FILE \
+		> $DEMO_FILE
 		
 	else
 		cp $SRC_DIR/$FILE $DEMO_FILE
