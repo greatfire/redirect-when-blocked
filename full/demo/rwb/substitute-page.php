@@ -27,6 +27,7 @@ li {
 iframe {
 	border: 0;
 	margin: 0;
+	overflow: hidden;
 	padding: 0;
 	width: 100%;
 }
@@ -55,6 +56,8 @@ iframe {
 		
 		$iframe.attr('frameBorder', '0');
 		$iframe.attr('scrolling', 'no');
+		$iframe.attr('horizontalscrolling', 'no');
+		$iframe.attr('verticalscrolling', 'no');
 		$iframe.attr('seamless', 'seamless');
 
 		setIframeHeight($iframe);
