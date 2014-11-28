@@ -21,7 +21,7 @@ h1 {
 li {
 	display: inline-block;
 	*display: inline; /*IE7*/
-	*zoom: 1; /*IE7*/
+	*zoom: 1;
 }
 
 iframe {
@@ -30,6 +30,7 @@ iframe {
 	overflow: hidden;
 	padding: 0;
 	width: 100%;
+	padding: 0;
 }
 </style>
 </head>
@@ -47,7 +48,8 @@ iframe {
 	</ul>
 	<?php } ?>
 	</div>
-	<iframe frameBorder="0" scrolling="no" verticalscrolling="no" seamless="seamless" height="600px" src="<?php print $iframe_src ?>"></iframe>
+	<iframe frameBorder="0" scrolling="no" verticalscrolling="no"
+		seamless="seamless" height="600px" src="<?php print $iframe_src ?>"></iframe>
 	<script src="rwb/jquery-1.11.1.min.js"></script>
 	<script>
 	function iframeLoaded($iframe) {
@@ -80,6 +82,10 @@ iframe {
 		}
 	}
 
+	if (!window.console) {
+		console = {	log : function() {}	};
+	}
+	
 	if (typeof String.prototype.startsWith != 'function') {
 		String.prototype.startsWith = function (str){
 			return this.lastIndexOf(str, 0) === 0;
