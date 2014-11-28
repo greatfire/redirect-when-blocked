@@ -6,20 +6,22 @@ if (! defined('WEBSITE_TITLE')) {
 
 require 'rwb/RedirectWhenBlockedFull.inc';
 
-$alt_url_bases = array(
-	// Local testing
-	'http://localhost/redirect-when-blocked/full/demo/',
-	'http://localhost1/redirect-when-blocked/full/demo/',
-	'http://localhost2/redirect-when-blocked/full/demo/',
-	
-	// Source website
-	'http://rwb.greatfire.org/full/demo/',
-	
-	// Mirrors
-	'https://d3059gkikm7ixv.cloudfront.net/full/demo/',
-	'https://d3u4seijlqumgj.cloudfront.net/full/demo/',
-	'https://d20fpcnyklk6h4.cloudfront.net/full/demo/'
-);
+// Local testing.
+if ($_SERVER['HTTP_HOST'] == 'localhost') {
+	$alt_url_bases = array(
+		'http://localhost/redirect-when-blocked/full/demo/',
+		'http://localhost1/redirect-when-blocked/full/demo/',
+		'http://localhost2/redirect-when-blocked/full/demo/'
+	);
+} 
+
+else {
+	$alt_url_bases = array(
+		'https://d3059gkikm7ixv.cloudfront.net/full/demo/',
+		'https://d3u4seijlqumgj.cloudfront.net/full/demo/',
+		'https://d20fpcnyklk6h4.cloudfront.net/full/demo/'
+	);
+}
 
 $alt_url_collections = array(
 	'https://github.com/greatfire/wiki'
