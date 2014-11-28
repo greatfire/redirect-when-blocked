@@ -4,7 +4,7 @@ class RedirectWhenBlockedFull
 {
 
 	public function __construct($alt_url_bases, $website_title, 
-		$get_param_name = 'rwb3498472')
+		$alt_url_collections, $get_param_name = 'rwb3498472')
 	{
 		/*
 		 * Normal request. Substitute the response with our own page.
@@ -22,7 +22,7 @@ class RedirectWhenBlockedFull
 			
 			require 'substitute-page.php';
 			exit();
-		} 
+		}		
 
 		/*
 		 * This request comes from another url_base (mirror or source host).

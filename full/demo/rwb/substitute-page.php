@@ -9,7 +9,7 @@ html, body {
 	padding: 0;
 }
 
-p {
+p, ul {
 	text-align: center;
 }
 
@@ -27,14 +27,25 @@ iframe {
 </style>
 </head>
 <body>
-	<p>Loading...</p>
-	<h1><?php print $website_title ?></h1>
+	<div>
+		<p>Loading...</p>
+		<h1><?php print $website_title ?></h1>
+		<p>If the website fails to load, you may be able to find another
+			mirror URL here:</p>
+	<?php if($alt_url_collections) { ?>
+	<ul>
+		<?php foreach($alt_url_collections as $alt_url_collection) { ?>
+		<li><a href="<?php print $alt_url_collection; ?>"><?php print $alt_url_collection; ?></a></li>
+		<?php } ?>
+	</ul>
+	<?php } ?>
+	</div>
 	<iframe src="<?php print $iframe_src ?>"></iframe>
 	<script src="rwb/jquery-1.11.1.min.js"></script>
 	<script>
 	function iframeLoaded($iframe) {
 		document.title = $iframe.contents().find('title').text();
-		$('p,h1').remove();
+		$('div').remove();
 		
 		$iframe.attr('frameBorder', '0');
 		$iframe.attr('scrolling', 'no');
@@ -84,6 +95,15 @@ iframe {
 		}
 		$(this).remove();
 	});
+
+	setTimeout(function() {
+		if(!done) {
+			console.log('emergency!');
+			$('li a').each(function() {
+				window.location = $(this).attr('href');
+			});
+		}
+	}, 20000);
 
 	var alt_url_bases = <?php print json_encode($alt_url_bases) ?>;
 	var relative_url = "";

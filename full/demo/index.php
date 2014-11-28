@@ -1,17 +1,31 @@
 <?php
-
-const WEBSITE_TITLE = 'Redirect When Blocked Full Edition Demo Website Index';
+if (! defined('WEBSITE_TITLE')) {
+	define('WEBSITE_TITLE', 
+		'Redirect When Blocked Full Edition Demo Website Index');
+}
 
 require 'rwb/RedirectWhenBlockedFull.inc';
 
 $alt_url_bases = array(
+	// Local testing
+	'http://localhost/redirect-when-blocked/full/demo/',
+	'http://localhost1/redirect-when-blocked/full/demo/',
+	'http://localhost2/redirect-when-blocked/full/demo/',
+	
+	// Source website
 	'http://rwb.greatfire.org/full/demo/',
+	
+	// Mirrors
 	'https://d3059gkikm7ixv.cloudfront.net/full/demo/',
 	'https://d3u4seijlqumgj.cloudfront.net/full/demo/',
 	'https://d20fpcnyklk6h4.cloudfront.net/full/demo/'
 );
 
-new RedirectWhenBlockedFull($alt_url_bases, WEBSITE_TITLE);
+$alt_url_collections = array(
+	'https://github.com/greatfire/wiki'
+);
+
+new RedirectWhenBlockedFull($alt_url_bases, WEBSITE_TITLE, $alt_url_collections);
 
 ?>
 <!DOCTYPE html>
