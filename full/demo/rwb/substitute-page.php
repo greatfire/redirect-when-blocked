@@ -47,7 +47,7 @@ iframe {
 	</ul>
 	<?php } ?>
 	</div>
-	<iframe frameBorder="0" scrolling="no" verticalscrolling="no" seamless="seamless" src="<?php print $iframe_src ?>"></iframe>
+	<iframe frameBorder="0" scrolling="no" verticalscrolling="no" seamless="seamless" height="600px" src="<?php print $iframe_src ?>"></iframe>
 	<script src="rwb/jquery-1.11.1.min.js"></script>
 	<script>
 	function iframeLoaded($iframe) {
