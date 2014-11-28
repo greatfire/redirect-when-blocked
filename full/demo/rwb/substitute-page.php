@@ -18,6 +18,12 @@ h1 {
 	text-align: center;
 }
 
+li {
+	display: inline-block;
+	*display: inline; /*IE7*/
+	*zoom: 1; /*IE7*/
+}
+
 iframe {
 	border: 0;
 	margin: 0;
