@@ -85,6 +85,8 @@ iframe {
 			return this.lastIndexOf(str, 0) === 0;
 		};
 	}
+
+	$('iframe').height($(window).height());
 	
 	var done = false;
 	$('iframe').load(function() {
