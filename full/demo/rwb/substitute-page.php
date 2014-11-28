@@ -86,7 +86,7 @@ iframe {
 	});
 
 	var alt_url_bases = <?php print json_encode($alt_url_bases) ?>;
-	var relative_url;
+	var relative_url = "";
 	for(var i in alt_url_bases) {
 		if(window.location.href.startsWith(alt_url_bases[i])) {
 			relative_url = window.location.href.substring(alt_url_bases[i].length);
