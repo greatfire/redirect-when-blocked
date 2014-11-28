@@ -5,10 +5,10 @@ const WEBSITE_TITLE = 'Redirect When Blocked Full Edition Demo Website Index';
 require 'rwb/RedirectWhenBlockedFull.inc';
 
 $alt_url_bases = array(
-	'http://rwb.greatfire.org/redirect-when-blocked/full/demo/',
-	'https://d3059gkikm7ixv.cloudfront.net/redirect-when-blocked/full/demo/',
-	'https://d3u4seijlqumgj.cloudfront.net/redirect-when-blocked/full/demo/',
-	'https://d20fpcnyklk6h4.cloudfront.net/redirect-when-blocked/full/demo/'
+	'http://rwb.greatfire.org/full/demo/',
+	'https://d3059gkikm7ixv.cloudfront.net/full/demo/',
+	'https://d3u4seijlqumgj.cloudfront.net/full/demo/',
+	'https://d20fpcnyklk6h4.cloudfront.net/full/demo/'
 );
 
 new RedirectWhenBlockedFull($alt_url_bases, WEBSITE_TITLE);
