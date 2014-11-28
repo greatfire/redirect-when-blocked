@@ -47,18 +47,12 @@ iframe {
 	</ul>
 	<?php } ?>
 	</div>
-	<iframe src="<?php print $iframe_src ?>"></iframe>
+	<iframe frameBorder="0" scrolling="no" verticalscrolling="no" seamless="seamless" src="<?php print $iframe_src ?>"></iframe>
 	<script src="rwb/jquery-1.11.1.min.js"></script>
 	<script>
 	function iframeLoaded($iframe) {
 		document.title = $iframe.contents().find('title').text();
 		$('div').remove();
-		
-		$iframe.attr('frameBorder', '0');
-		$iframe.attr('scrolling', 'no');
-		$iframe.attr('horizontalscrolling', 'no');
-		$iframe.attr('verticalscrolling', 'no');
-		$iframe.attr('seamless', 'seamless');
 
 		setIframeHeight($iframe);
 		setInterval(function() {
@@ -146,8 +140,9 @@ iframe {
 				if(!done) {
 					done = true;
 					console.log(alt_url + ' succeeded');
+					$iframe = $('iframe').clone();
 					$('iframe').remove();
-					$iframe = $('<iframe>');
+					$iframe.attr('src', '');
 					$('body').append($iframe);
 
 					data.html = data.html.replace('</head>', '<base href="' + alt_url_base + '"></head>');
