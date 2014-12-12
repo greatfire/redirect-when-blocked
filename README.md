@@ -8,8 +8,10 @@ Thousands of websites are blocked in China. One approach to tackle this is to cr
 
 ## Two editions
 
-* Basic Edition: https://github.com/greatfire/redirect-when-blocked/tree/master/basic
-* Full Edition: https://github.com/greatfire/redirect-when-blocked/tree/master/full
+<ul>
+<li>Basic Edition: https://github.com/greatfire/redirect-when-blocked/tree/master/basic</li>
+<li>Full Edition: https://github.com/greatfire/redirect-when-blocked/tree/master/full</li>
+</ul>
 
                                     | Basic Edition         | Full Edition
 ----------------------------------  | --------------------- | ------------
