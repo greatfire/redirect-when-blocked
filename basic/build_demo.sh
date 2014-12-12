@@ -2,7 +2,7 @@
 SRC_DIR="src"
 DEMO_DIR="demo"
 
-RWB_REDIRECTION_URLS="https://bbc1.azurewebsites.net https://github.com/greatfire/wiki"
+RWB_REDIRECTION_URLS="https://d3059gkikm7ixv.cloudfront.net/basic/demo/ https://d3u4seijlqumgj.cloudfront.net/basic/demo/ https://d20fpcnyklk6h4.cloudfront.net/basic/demo/"
 
 declare -A VARS
 
