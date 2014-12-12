@@ -3,7 +3,8 @@
 class RedirectWhenBlockedFull
 {
 
-	const GET_PARAM_NAME = 'rwb3498472';
+	// This can't be used elsewhere on the website.
+	const QUERY_STRING_PARAM_NAME = 'rwb3498472';
 
 	const OUTPUT_TYPE_IFRAME = 1;
 
@@ -11,39 +12,86 @@ class RedirectWhenBlockedFull
 
 	private static $alt_base_urls, $alt_url_collections;
 
-	private static $website_title;
+	// If a part of the website uses a separate base URL.
+	private static $base_url_suffix = '';
 
 	private static $output_type;
 
-	private static $base_url_suffix = '';
-
-	public static function setWebsiteTitle($website_title)
-	{
-		self::$website_title = $website_title;
+	// Shown on the cached page while the content is loading.
+	private static $website_title;
+	
+	public static function getAltBaseUrls() {
+		return self::$alt_base_urls;
 	}
 
-	public static function setUrls($alt_base_urls, $alt_url_collections)
+	// Guess the current base URL.
+	public static function getBaseUrl()
 	{
-		self::$alt_base_urls = $alt_base_urls;
-		self::$alt_url_collections = $alt_url_collections;
+		$candidates = array();
+		
+		if (isset($_GET[self::QUERY_STRING_PARAM_NAME])) {
+			$url = substr($_GET[self::QUERY_STRING_PARAM_NAME], 1);
+			$candidates[] = $url;
+		}
+		
+		if (isset($_SERVER['HTTP_ORIGIN'])) {
+			$candidates[] = $_SERVER['HTTP_ORIGIN'];
+		}
+		
+		if (isset($_SERVER['HTTP_REFERER'])) {
+			$candidates[] = $_SERVER['HTTP_REFERER'];
+		}
+		
+		foreach ($candidates as $candidate) {
+			foreach (self::$alt_base_urls as $alt_base_url) {
+				if ($candidate && self::startsWith($candidate, $alt_base_url)) {
+					return $alt_base_url;
+				}
+			}
+		}
+		
+		return self::$alt_base_urls[0];
 	}
 
-	public static function setUrlsFromConfDir()
+	public static function getOutputType()
 	{
-		$alt_base_urls = file(__DIR__ . '/conf/alt_base_urls.txt', 
-			FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-		$alt_url_collections = file(__DIR__ . '/conf/alt_url_collections.txt', 
-			FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-		self::setUrls($alt_base_urls, $alt_url_collections);
+		return self::$output_type;
 	}
 
+	// Because we append a custom query string parameter, the script may want to access
+	// the "original" URI, with the custom query string parameter removed.
+	public static function getRequestUriWithoutQueryStringParam()
+	{
+		$uri = $_SERVER['REQUEST_URI'];
+		if (! isset($_GET[self::QUERY_STRING_PARAM_NAME])) {
+			return $uri;
+		}
+		
+		$get_copy = $_GET;
+		unset($get_copy[self::QUERY_STRING_PARAM_NAME]);
+		
+		$uri_components = parse_url($uri);
+		$uri = $uri_components['path'];
+		
+		if ($get_copy) {
+			$uri .= '?' . http_build_query($get_copy);
+		}
+		
+		if (isset($uri_components['fragment'])) {
+			$uri .= '#' . $uri_components['fragment'];
+		}
+		
+		return $uri;
+	}
+
+	// Main activity.
 	public static function run()
 	{
 		
 		/*
 		 * Normal request. Substitute the response with our own page.
 		 */
-		if (! isset($_GET[self::GET_PARAM_NAME])) {
+		if (! isset($_GET[self::QUERY_STRING_PARAM_NAME])) {
 			
 			$iframe_src = $_SERVER['REQUEST_URI'];
 			if ($_SERVER['QUERY_STRING']) {
@@ -52,7 +100,7 @@ class RedirectWhenBlockedFull
 				$iframe_src .= '?';
 			}
 			
-			$iframe_src .= self::GET_PARAM_NAME . '=' . self::OUTPUT_TYPE_IFRAME;
+			$iframe_src .= self::QUERY_STRING_PARAM_NAME . '=' . self::OUTPUT_TYPE_IFRAME;
 			
 			$request_path_depth = count(explode('/', $_SERVER['REQUEST_URI']));
 			$script_path_depth = count(explode('/', $_SERVER['SCRIPT_NAME']));
@@ -63,7 +111,7 @@ class RedirectWhenBlockedFull
 			exit();
 		}
 		
-		self::$output_type = $_GET[self::GET_PARAM_NAME][0];
+		self::$output_type = $_GET[self::QUERY_STRING_PARAM_NAME][0];
 		
 		if (self::$output_type == self::OUTPUT_TYPE_JSONP) {
 			
@@ -110,68 +158,33 @@ class RedirectWhenBlockedFull
 			});
 	}
 
-	public static function getBaseUrl()
-	{
-		$candidates = array();
-		
-		if (isset($_GET[self::GET_PARAM_NAME])) {
-			$url = substr($_GET[self::GET_PARAM_NAME], 1);
-			$candidates[] = $url;
-		}
-		
-		if (isset($_SERVER['HTTP_ORIGIN'])) {
-			$candidates[] = $_SERVER['HTTP_ORIGIN'];
-		}
-		
-		if (isset($_SERVER['HTTP_REFERER'])) {
-			$candidates[] = $_SERVER['HTTP_REFERER'];
-		}
-		
-		foreach ($candidates as $candidate) {
-			foreach (self::$alt_base_urls as $alt_base_url) {
-				if ($candidate && self::startsWith($candidate, $alt_base_url)) {
-					return $alt_base_url;
-				}
-			}
-		}
-		
-		return self::$alt_base_urls[0];
-	}
-
-	public static function getOutputType()
-	{
-		return self::$output_type;
-	}
-
-	public static function getRequestUriWithoutGetParam()
-	{
-		$uri = $_SERVER['REQUEST_URI'];
-		if (! isset($_GET[self::GET_PARAM_NAME])) {
-			return $uri;
-		}
-		
-		$get_copy = $_GET;
-		unset($get_copy[self::GET_PARAM_NAME]);
-		
-		$uri_components = parse_url($uri);
-		$uri = $uri_components['path'];
-		
-		if ($get_copy) {
-			$uri .= '?' . http_build_query($get_copy);
-		}
-		
-		if (isset($uri_components['fragment'])) {
-			$uri .= '#' . $uri_components['fragment'];
-		}
-		
-		return $uri;
-	}
-
 	public static function setBaseUrlSuffix($base_url_suffix)
 	{
 		self::$base_url_suffix = $base_url_suffix;
 	}
 
+	public static function setUrls($alt_base_urls, $alt_url_collections)
+	{
+		self::$alt_base_urls = $alt_base_urls;
+		self::$alt_url_collections = $alt_url_collections;
+	}
+
+	public static function setUrlsFromConfDir()
+	{
+		$alt_base_urls = file(__DIR__ . '/conf/alt_base_urls.txt', 
+			FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+		$alt_url_collections = file(__DIR__ . '/conf/alt_url_collections.txt', 
+			FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+		self::setUrls($alt_base_urls, $alt_url_collections);
+	}
+
+	public static function setWebsiteTitle($website_title)
+	{
+		self::$website_title = $website_title;
+	}
+
+	// Helper function which doesn't obviously belong in this class, but is
+	// very useful.
 	public static function startsWith($str, $needle)
 	{
 		if (is_array($needle)) {

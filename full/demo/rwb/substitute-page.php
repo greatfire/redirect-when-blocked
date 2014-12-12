@@ -26,7 +26,7 @@
 	<script src="<?php print $rwb_path_relative_to_request_path ?>/jquery-1.11.1.min.js"></script>
 	<script>
 	var alt_base_urls = <?php print json_encode(self::$alt_base_urls) ?>;
-	var get_param_name = '<?php print self::GET_PARAM_NAME ?>';
+	var get_param_name = '<?php print self::QUERY_STRING_PARAM_NAME ?>';
 	var output_type_jsonp = '<?php print self::OUTPUT_TYPE_JSONP ?>';
 	<?php require 'substitute-page.js' ?>
 	</script>
