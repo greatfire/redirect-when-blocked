@@ -27,10 +27,13 @@ class RedirectWhenBlockedFull
 		self::$alt_base_urls = $alt_base_urls;
 		self::$alt_url_collections = $alt_url_collections;
 	}
-	
-	public static function setUrlsFromConfDir() {
-		$alt_base_urls = file(__DIR__ . '/conf/alt_base_urls.txt');
-		$alt_url_collections = file(__DIR__ . '/conf/alt_url_collections.txt');
+
+	public static function setUrlsFromConfDir()
+	{
+		$alt_base_urls = file(__DIR__ . '/conf/alt_base_urls.txt', 
+			FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+		$alt_url_collections = file(__DIR__ . '/conf/alt_url_collections.txt', 
+			FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 		self::setUrls($alt_base_urls, $alt_url_collections);
 	}
 
