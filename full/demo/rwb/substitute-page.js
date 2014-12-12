@@ -125,5 +125,3 @@ for(var i in alt_base_urls) {
 		});
 	})(alt_base_urls[i]);
 }
-
-console.log('a3')
