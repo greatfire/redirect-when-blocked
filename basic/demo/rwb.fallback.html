@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html manifest="rwb.appcache">
 <head>
 <meta charset="UTF-8">
 <title>Redirect When Blocked</title>
@@ -25,15 +25,11 @@ $('li a').each(function() {
 var $a = $(this);
 var a = $a[0];
 
-var img_url;
 if ($a.attr('href') == '/') {
-img_url = window.location.href.replace(/[^/]+$/, '');
-$a.attr('href', img_url);
-$a.html(img_url);
-} else {
-img_url = a.protocol + '//' + a.host;
+$a.attr('href', window.location.href.replace(/[^/]+$/, ''));
 }
-img_url += '/favicon.ico';
+
+var img_url = $a.attr('href') + 'favicon.ico';
 
 $img = $('<img>').attr('src', img_url).load(function() {
 $a.css('color', 'green');
