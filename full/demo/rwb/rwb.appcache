@@ -1,5 +1,5 @@
 CACHE MANIFEST 
-# 9
+# <?php header('Content-type: text/cache-manifest'); $str = ''; foreach(array(__DIR__, __DIR__ . '/conf') as $dir) { foreach(scandir($dir) as $file) { $str .= md5_file($dir . '/' . $file); } } print md5($str); ?>
 
 jquery-1.11.1.min.js
 

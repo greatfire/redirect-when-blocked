@@ -1,0 +1,3 @@
+http://localhost/redirect-when-blocked/full/demo/
+http://localhost1/redirect-when-blocked/full/demo/
+http://localhost2/redirect-when-blocked/full/demo/

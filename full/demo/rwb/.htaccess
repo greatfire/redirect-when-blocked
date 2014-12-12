@@ -1,0 +1,4 @@
+# Handle appcache file with PHP. This requires an AllowOverride directive in Apache.
+# The site will still work without this, but the browser cache won't automatically update
+# when the code changes.
+AddHandler application/x-httpd-php .appcache

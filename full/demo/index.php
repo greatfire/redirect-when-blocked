@@ -6,29 +6,9 @@ if (! defined('WEBSITE_TITLE')) {
 
 require 'rwb/RedirectWhenBlockedFull.inc';
 
-// Local testing.
-if ($_SERVER['HTTP_HOST'] == 'localhost') {
-	$alt_url_bases = array(
-		'http://localhost/redirect-when-blocked/full/demo/',
-		'http://localhost1/redirect-when-blocked/full/demo/',
-		'http://localhost2/redirect-when-blocked/full/demo/'
-	);
-} 
-
-else {
-	$alt_url_bases = array(
-		'https://d3059gkikm7ixv.cloudfront.net/full/demo/',
-		'https://d3u4seijlqumgj.cloudfront.net/full/demo/',
-		'https://d20fpcnyklk6h4.cloudfront.net/full/demo/'
-	);
-}
-
-$alt_url_collections = array(
-	'https://github.com/greatfire/wiki'
-);
-
-new RedirectWhenBlockedFull($alt_url_bases, WEBSITE_TITLE, $alt_url_collections);
-
+RedirectWhenBlockedFull::setUrlsFromConfDir();
+RedirectWhenBlockedFull::setWebsiteTitle(WEBSITE_TITLE);
+RedirectWhenBlockedFull::run();
 ?>
 <!DOCTYPE html>
 <html>

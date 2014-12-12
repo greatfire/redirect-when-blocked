@@ -1,0 +1,28 @@
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
+p, ul {
+	text-align: center;
+}
+
+h1 {
+	color: #aaa;
+	text-align: center;
+}
+
+li {
+	display: inline-block;
+	*display: inline; /*IE7*/
+	*zoom: 1;
+}
+
+iframe {
+	border: 0;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	width: 100%;
+	padding: 0;
+}
