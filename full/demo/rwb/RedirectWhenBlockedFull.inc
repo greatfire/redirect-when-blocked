@@ -1,8 +1,9 @@
 <?php
+require 'multibyte.inc';
 
 class RedirectWhenBlockedFull
 {
-
+	
 	// This can't be used elsewhere on the website.
 	const QUERY_STRING_PARAM_NAME = 'rwb3498472';
 
@@ -11,19 +12,20 @@ class RedirectWhenBlockedFull
 	const OUTPUT_TYPE_JSONP = 2;
 
 	private static $alt_base_urls, $alt_url_collections;
-
+	
 	// If a part of the website uses a separate base URL.
 	private static $base_url_suffix = '';
 
 	private static $output_type;
-
+	
 	// Shown on the cached page while the content is loading.
 	private static $website_title;
-	
-	public static function getAltBaseUrls() {
+
+	public static function getAltBaseUrls()
+	{
 		return self::$alt_base_urls;
 	}
-
+	
 	// Guess the current base URL.
 	public static function getBaseUrl()
 	{
@@ -57,7 +59,7 @@ class RedirectWhenBlockedFull
 	{
 		return self::$output_type;
 	}
-
+	
 	// Because we append a custom query string parameter, the script may want to access
 	// the "original" URI, with the custom query string parameter removed.
 	public static function getRequestUriWithoutQueryStringParam()
@@ -83,7 +85,7 @@ class RedirectWhenBlockedFull
 		
 		return $uri;
 	}
-
+	
 	// Main activity.
 	public static function run()
 	{
@@ -100,7 +102,8 @@ class RedirectWhenBlockedFull
 				$iframe_src .= '?';
 			}
 			
-			$iframe_src .= self::QUERY_STRING_PARAM_NAME . '=' . self::OUTPUT_TYPE_IFRAME;
+			$iframe_src .= self::QUERY_STRING_PARAM_NAME . '=' .
+				 self::OUTPUT_TYPE_IFRAME;
 			
 			$request_path_depth = count(explode('/', $_SERVER['REQUEST_URI']));
 			$script_path_depth = count(explode('/', $_SERVER['SCRIPT_NAME']));
@@ -148,7 +151,7 @@ class RedirectWhenBlockedFull
 					print 
 						$_GET['callback'] . '(' . json_encode(
 							array(
-								'html' => $html
+								'html' => utf8_encode_current_charset($html)
 							)) . ');';
 				} 
 
@@ -182,7 +185,7 @@ class RedirectWhenBlockedFull
 	{
 		self::$website_title = $website_title;
 	}
-
+	
 	// Helper function which doesn't obviously belong in this class, but is
 	// very useful.
 	public static function startsWith($str, $needle)
