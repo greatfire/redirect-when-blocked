@@ -2,3 +2,9 @@
 # The site will still work without this, but the browser cache won't automatically update
 # when the code changes.
 AddHandler application/x-httpd-php .appcache
+
+# Deny access to everything except jquery and the appcache file
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !^jquery.*\.js$
+RewriteCond %{REQUEST_FILENAME} !^rwb.appcache$
+RewriteRule . - [F]
