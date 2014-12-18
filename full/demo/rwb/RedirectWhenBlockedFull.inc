@@ -11,6 +11,12 @@ class RedirectWhenBlockedFull
 
 	const OUTPUT_TYPE_JSONP = 2;
 
+	public static $translatable_text = array(
+		'loading' => 'Loading...',
+		'if_website_fails' => 'If the website fails to load, you may be able to find another
+			mirror URL here:'
+	);
+
 	private static $alt_base_urls, $alt_url_collections;
 	
 	// If a part of the website uses a separate base URL.
