@@ -3,8 +3,19 @@ html, body {
 	padding: 0;
 }
 
-p, ul {
+p {
 	text-align: center;
+}
+
+ul {
+	border: thin solid #ddd;
+	margin: auto;
+	padding: 5px;
+	width: 300px;
+}
+
+li {
+	margin-left: 50px;
 }
 
 h1 {
@@ -12,10 +23,11 @@ h1 {
 	text-align: center;
 }
 
-li {
-	display: inline-block;
-	*display: inline; /*IE7*/
-	*zoom: 1;
+div.top {
+	color: #222;
+	font-size: 90%;
+	padding: 5px;
+	text-align: center;
 }
 
 iframe {

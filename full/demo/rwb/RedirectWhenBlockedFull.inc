@@ -1,11 +1,18 @@
 <?php
 require 'multibyte.inc';
+require 'rwb.appcache.functions.inc';
 
 class RedirectWhenBlockedFull
 {
 	
 	// This can't be used elsewhere on the website.
 	const QUERY_STRING_PARAM_NAME = 'rwb3498472';
+	
+	// Same as above, used for anchors targeting top window.
+	const TOP_WINDOW_NAME = self::QUERY_STRING_PARAM_NAME;
+	
+	// Used to identify main iframe.
+	const IFRAME_WINDOW_NAME = 'rwb3498472i';
 
 	const OUTPUT_TYPE_IFRAME = 1;
 
@@ -21,8 +28,6 @@ class RedirectWhenBlockedFull
 	
 	// If a part of the website uses a separate base URL.
 	private static $base_url_suffix = '';
-
-	private static $output_type;
 	
 	// Shown on the cached page while the content is loading.
 	private static $website_title;
@@ -63,7 +68,13 @@ class RedirectWhenBlockedFull
 
 	public static function getOutputType()
 	{
-		return self::$output_type;
+		static $output_type;
+		
+		if (! isset($output_type)) {
+			$output_type = isset($_GET[self::QUERY_STRING_PARAM_NAME]) ? $_GET[self::QUERY_STRING_PARAM_NAME][0] : NULL;
+		}
+		
+		return $output_type;
 	}
 	
 	// Because we append a custom query string parameter, the script may want to access
@@ -77,6 +88,16 @@ class RedirectWhenBlockedFull
 		
 		$get_copy = $_GET;
 		unset($get_copy[self::QUERY_STRING_PARAM_NAME]);
+		
+		// If JSONP, remove other parameters added by jQuery.
+		if (self::getOutputType() == self::OUTPUT_TYPE_JSONP) {
+			if (isset($get_copy['callback'])) {
+				unset($get_copy['callback']);
+			}
+			if (isset($get_copy['_'])) {
+				unset($get_copy['_']);
+			}
+		}
 		
 		$uri_components = parse_url($uri);
 		$uri = $uri_components['path'];
@@ -120,9 +141,7 @@ class RedirectWhenBlockedFull
 			exit();
 		}
 		
-		self::$output_type = $_GET[self::QUERY_STRING_PARAM_NAME][0];
-		
-		if (self::$output_type == self::OUTPUT_TYPE_JSONP) {
+		if (self::getOutputType() == self::OUTPUT_TYPE_JSONP) {
 			
 			// Output header now since other header output might block it later.
 			header('Content-Type: application/javascript');
@@ -140,11 +159,23 @@ class RedirectWhenBlockedFull
 				
 				// Insert base tag, unless there already is one.
 				if (stripos($html, '<base') === false) {
-					$html = str_replace('<head>', 
-						'<head><base href="' .
-							 RedirectWhenBlockedFull::getBaseUrl() .
-							 self::$base_url_suffix . '" target="_parent">', 
-							$html);
+					
+					// Varieties of head tag. Some sites use the second version...
+					$head_tags = array(
+						'<head>',
+						'<head >'
+					);
+					
+					foreach ($head_tags as $head_tag) {
+						$html = str_replace($head_tag, 
+							$head_tag . '<base href="' .
+								 RedirectWhenBlockedFull::getBaseUrl() .
+								 self::$base_url_suffix . '" target="' . self::TOP_WINDOW_NAME . '">', 
+								$html, $count);
+						if($count > 0) {
+							break;
+						}
+					}
 				}
 				
 				/*

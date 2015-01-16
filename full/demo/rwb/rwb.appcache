@@ -1,5 +1,5 @@
 CACHE MANIFEST 
-# <?php header('Cache-Control: max-age=0'); header('Content-type: text/cache-manifest'); $str = ''; foreach(array(__DIR__, __DIR__ . '/conf') as $dir) { foreach(scandir($dir) as $file) { $str .= md5_file($dir . '/' . $file); } } print md5($str); ?>
+# <?php require 'rwb.appcache.functions.inc'; rwb_appcache_comment(); ?>
 
 jquery-1.11.1.min.js
 
