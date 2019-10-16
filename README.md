@@ -13,11 +13,11 @@ Thousands of websites are blocked in China. One approach to tackle this is to cr
 <li>Full Edition: https://github.com/greatfire/redirect-when-blocked/tree/master/full</li>
 </ul>
 
-                                    | Basic Edition         | Full Edition
-----------------------------------  | --------------------- | ------------
-Server requirements                 | None                  | PHP
-Accessibility and SEO implications  | None                  | Major
-Speed                               | Slow / unpredictable  | Fast
+|                                    | Basic Edition         | Full Edition
+|----------------------------------  | --------------------- | ------------
+|Server requirements                 | None                  | PHP
+|Accessibility and SEO implications  | None                  | Major
+|Speed                               | Slow / unpredictable  | Fast
 
 ## Inspiration
 
